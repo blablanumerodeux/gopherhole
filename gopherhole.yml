@@ -5,21 +5,17 @@ services:
     image: prodhe/gopher:latest
     ports:
       - 70:70
-    command: server
     networks:
       - traefik_traefik
     volumes:
       - /opt/gopher/public:/public
     environment:
       - GOPHER_ADDRESS=gopher.project.lambla.eu
+      - PUID=1001
+      - PGID=1002
     deploy:
       restart_policy:
         condition: none
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.gopher.rule=Host(`gopher.project.lambla.eu`)"
-        - "traefik.http.routers.gopher.entrypoints=web"
-        - "traefik.http.services.gopher.loadbalancer.server.port=70"
         
 networks:
   traefik_traefik:
